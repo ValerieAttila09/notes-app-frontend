@@ -48,7 +48,6 @@ export default function Login() {
             <PasswordInput
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-
             />
 
             {error && <p className='text-red-500 outfit-regular pb-1'>{error}</p>}
