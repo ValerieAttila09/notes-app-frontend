@@ -53,7 +53,7 @@ export default function Login() {
             {error && <p className='text-red-500 outfit-regular pb-1'>{error}</p>}
 
             <div className="mt-4 w-full">
-              <button className="w-full rounded-md text-center border border-[#ebebeb] py-2 outfit-regular hover:bg-[#fafafa] hover:border-[#d7d7d7] transition-all" type="submit">Login</button>
+              <button className="w-full rounded-md text-center border border-[#ebebeb] bg-indigo-600 text-white py-2 outfit-regular hover:bg-indigo-500 hover:shadow hover:border-[#d7d7d7] transition-all" type="submit">Log In</button>
             </div>
 
             <p className="text-sm text-center mt-4">

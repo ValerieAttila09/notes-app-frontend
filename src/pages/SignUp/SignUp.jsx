@@ -2,6 +2,7 @@ import { useState } from "react"
 import Navbar from "../../components/Navbar/Navbar"
 import PasswordInput from "../../components/Input/PasswordInput"
 import { Link } from "react-router-dom"
+import { validateEmail } from "../../utils/helper"
 
 export default function SignUp() {
 
@@ -16,7 +17,7 @@ export default function SignUp() {
     if (!name) {
       setError("Please enter your name")
     }
-    if (!email) {
+    if (!validateEmail(email)) {
       setError("Please enter your email")
     }
     if (!password) {
@@ -57,7 +58,7 @@ export default function SignUp() {
             {error && <p className='text-red-500 outfit-regular pb-1'>{error}</p>}
 
             <div className="mt-4 w-full">
-              <button className="w-full rounded-md text-center border border-[#ebebeb] py-2 outfit-regular hover:bg-[#fafafa] hover:border-[#d7d7d7] transition-all" type="submit">Create Account</button>
+              <button className="w-full rounded-md text-center border border-[#ebebeb] bg-indigo-600 text-white py-2 outfit-regular hover:bg-indigo-500 hover:shadow hover:border-[#d7d7d7] transition-all" type="submit">Create Account</button>
             </div>
 
             <p className="text-sm text-center mt-4">
