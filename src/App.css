@@ -2,4 +2,8 @@
   .icon-btn {
     @apply text-xl text-neutral-300 cursor-pointer hover:text-indigo-500;
   }
+
+  .input-label {
+    @apply text-xs text-neutral-400;
+  }
 }
