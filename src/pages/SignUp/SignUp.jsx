@@ -23,6 +23,8 @@ export default function SignUp() {
     if (!password) {
       setError("Please enter your password")
     }
+
+    setError('')
   }
 
   return (
@@ -32,7 +34,7 @@ export default function SignUp() {
       <div className="flex items-center justify-center mt-28">
         <div className="w-96 border border-[#d7d7d7] rounded-md bg-white px-7 py-10">
           <form className='flex flex-col gap-3' onSubmit={handleSignUp}>
-            <h4 className="text-4xl outfit-regular mb-2 text-neutral-900">Login</h4>
+            <h4 className="text-4xl outfit-regular mb-2 text-neutral-900">SignUp</h4>
 
             <div className="w-full">
               <input
