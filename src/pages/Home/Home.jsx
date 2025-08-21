@@ -7,7 +7,15 @@ export default function Home() {
       <Navbar/>
 
       <div className="container mx-auto">
-        <NoteCard/>
+        <NoteCard 
+        title={"Meeting on 7th April"} 
+        date={"07 April 2026"} 
+        content={"Meeting on 7th April Meeting on 7th April"}
+        tags={"#Meeting"}
+        onEdit={() => {}}
+        onDelete={() => {}}
+        onPinNote={() => {}}
+        />
       </div>
     </div>
   )
