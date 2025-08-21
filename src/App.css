@@ -1,0 +1,5 @@
+@layer components {
+  .icon-btn {
+    @apply text-xl text-neutral-300 cursor-pointer hover:text-indigo-500;
+  }
+}

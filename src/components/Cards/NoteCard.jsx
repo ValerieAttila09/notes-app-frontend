@@ -9,12 +9,12 @@ export default function NoteCard({ title, date, content, isPinned, tags, onEdit,
           <span className="text-xs text-neutral-500">{date}</span>
         </div>
 
-        <PinIcon size={18} onClick={onPinNote} className="text-neutral-800" />
+        <PinIcon size={18} onClick={onPinNote} className={`${isPinned ? "text-indigo-500" : "text-neutral-400"}`} />
 
       </div>
-      <p className="">{content?.slice(0, 60)}</p>
+      <p className="text-xs text-neutral-600 mt-2">{content?.slice(0, 60)}</p>
 
-      <div className="">
+      <div className="flex items-center justify-between mt-2">
         <div className="text-xs text-neutral-500">{tags}</div>
 
         <div className="flex items-center gap-2">
@@ -22,7 +22,7 @@ export default function NoteCard({ title, date, content, isPinned, tags, onEdit,
             <Edit size={16} className="text-neutral-600 group-hover:text-yellow-500 transition-all" />
           </button>
           <button className="group transition-all" onClick={onDelete}>
-            <Trash2 size={16} className="text-neutral-600 group-hover:text-red-500 transition-all"/>
+            <Trash2 size={16} className="icon-btn text-neutral-600 group-hover:text-red-500 transition-all"/>
           </button>
         </div>
       </div>
