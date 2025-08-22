@@ -31,12 +31,12 @@ export default function TagInput({ tags, setTags }) {
       {tags?.length > 0 && (
         <div className="flex items-center gap-2 flex-wrap mt-2">
           {tags.map((tag, index) => (
-            <span key={index} className="">
-              # {tag}
+            <span key={index} className="flex items-center gap-1 px-2 py-1 rounded-md bg-neutral-50">
+              <span><span className="text-neutral-400">#</span> {tag}</span>
               <button onClick={() => {
                 handleRemove(tag)
               }}>
-                <XIcon size={16} className="text-neutral-600" />
+                <XIcon size={16} className="ms-2 text-neutral-600" />
               </button>
             </span>
           ))}

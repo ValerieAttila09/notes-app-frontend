@@ -3,6 +3,7 @@ import NoteCard from "../../components/Cards/NoteCard";
 import Navbar from "../../components/Navbar/Navbar";
 import AddEditNotes from "./AddEditNotes";
 import ReactModal from "react-modal";
+import { Flashlight } from "lucide-react";
 
 export default function Home() {
 
@@ -55,9 +56,17 @@ export default function Home() {
           }
         }}
         contentLabel=""
-        className="w-[40%] max-h-3/4 bg-white rounded-md mx-auto mt-14 p-5 overflow-scroll"
+        className="w-[40%] max-h-3/4 bg-white rounded-md mx-auto mt-14 p-5 overflow-y-scroll"
       >
-        <AddEditNotes />
+        <AddEditNotes
+          onClose={() => {
+            setOpenAddEditModal({
+              isShown: false,
+              type: "add",
+              data: null
+            })
+          }}
+        />
       </ReactModal>
 
     </div>
