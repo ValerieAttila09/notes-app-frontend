@@ -1,3 +1,5 @@
+import TagInput from "../../components/Input/TagInput";
+
 export default function AddEditNotes() {
   return (
     <div className="">
@@ -12,6 +14,7 @@ export default function AddEditNotes() {
 
       <div className="mt-3">
         <label htmlFor="" className="input-label">Tags</label>
+        <TagInput/>
       </div>
 
       <button className="w-full bg-indigo-500 text-white outfit-medium mt-5 p-3" onClick={() => {}}>Add</button>
