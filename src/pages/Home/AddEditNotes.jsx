@@ -10,6 +10,13 @@ export default function AddEditNotes({ onClose, noteData, type }) {
 
   const [error, setError] = useState(null)
 
+  const addNewNote = async () => {
+    
+  }
+  const editNote = async () => {
+    
+  }
+
   const handleAddNote = () => {
     if (!title) {
       setError("Please enter the title!")
