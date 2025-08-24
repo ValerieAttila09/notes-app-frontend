@@ -62,7 +62,7 @@ export default function Home() {
             <NoteCard
               key={item._id}
               title={item.title}
-              date={moment(item.createdOn).format("Do MMM YYY")}
+              date={item.createdOn}
               content={item.content}
               tags={item.tags}
               isPinned={item.isPinned}
