@@ -1,23 +1,58 @@
-import { useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import TagInput from "../../components/Input/TagInput";
 import { XIcon } from "lucide-react";
+import axiosInstance from "../../utils/axiosInstance";
 
-export default function AddEditNotes({ onClose, noteData, type }) {
+export default function AddEditNotes({ onClose, noteData, type, getAllNotes }) {
 
-  const [title, setTitle] = useState("")
-  const [content, setContent] = useState("")
-  const [tags, setTags] = useState([])
+  const [title, setTitle] = useState(noteData?.title || "")
+  const [content, setContent] = useState(noteData?.content || "")
+  const [tags, setTags] = useState(noteData?.tags || [])
 
   const [error, setError] = useState(null)
 
-  const addNewNote = async () => {
-    
-  }
-  const editNote = async () => {
-    
-  }
+  const addNewNote = useCallback(async () => {
+    try {
+      const response = await axiosInstance.post('/add-note', {
+        title, content, tags
+      })
+      if (response.data && response.data.note) {
+        getAllNotes()
+        onClose()
+      }
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.message) {
+        setError(error.response.data.message)
+      }
+    }
+  }, [title, content, tags, getAllNotes, onClose])
 
-  const handleAddNote = () => {
+  const editNote = useCallback(async () => {
+    const noteId = noteData._id
+    try {
+      const response = await axiosInstance.put(`/edit-note/${noteId}`, {
+        title, content, tags
+      })
+      if (response.data && response.data.note) {
+        getAllNotes()
+        onClose()
+      }
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.message) {
+        setError(error.response.data.message)
+      }
+    }
+  }, [title, content, tags, noteData, getAllNotes, onClose])
+
+  useEffect(() => {
+    if (type === 'edit' && noteData) {
+      setTitle(noteData.title || "")
+      setContent(noteData.content || "")
+      setTags(noteData.tags || [])
+    }
+  }, [type, noteData])
+
+  const handleAddNote = useCallback(async () => {
     if (!title) {
       setError("Please enter the title!")
       return
@@ -26,15 +61,13 @@ export default function AddEditNotes({ onClose, noteData, type }) {
       setError("Please enter the content!")
       return
     }
-
     setError("")
-  }
-
-  if (type == 'edit'){
-    editNote()
-  } else {
-    addNewNote()
-  }
+    if (type === 'edit') {
+      await editNote()
+    } else {
+      await addNewNote()
+    }
+  }, [title, content, type, addNewNote, editNote])
 
   return (
     <div className="relative">
@@ -79,7 +112,9 @@ export default function AddEditNotes({ onClose, noteData, type }) {
         <p className="text-red-500 outfit-regular mt-5 p-3">{error}</p>
       )}
 
-      <button className="w-full bg-indigo-500 text-white outfit-medium mt-5 p-3" onClick={handleAddNote}>Add</button>
+      <button className="w-full bg-indigo-500 text-white outfit-medium mt-5 p-3" onClick={handleAddNote}>
+        {type === 'edit' ? 'Update' : 'Add'}
+      </button>
     </div>
   )
 }

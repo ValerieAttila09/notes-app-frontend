@@ -1,12 +1,11 @@
-import { useEffect, useState, useCallback } from "react";
-import NoteCard from "../../components/Cards/NoteCard";
-import Navbar from "../../components/Navbar/Navbar";
-import AddEditNotes from "./AddEditNotes";
-import ReactModal from "react-modal";
-import { Flashlight } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import axiosInstance from "../../utils/axiosInstance";
-import moment from 'moment'
+import { useEffect, useState, useCallback } from "react"
+import NoteCard from "../../components/Cards/NoteCard"
+import Navbar from "../../components/Navbar/Navbar"
+import AddEditNotes from "./AddEditNotes"
+import ReactModal from "react-modal"
+import { Flashlight } from "lucide-react"
+import { useNavigate } from "react-router-dom"
+import axiosInstance from "../../utils/axiosInstance"
 
 export default function Home() {
   const navigate = useNavigate()
@@ -20,6 +19,13 @@ export default function Home() {
   const [allNotes, setAllNotes] = useState([])
   const [userInfo, setUserInfo] = useState(null)
 
+  const handleEdit = (noteDetails) => {
+    setOpenAddEditModal({
+      isShown: true,
+      data: noteDetails,
+      type: "edit"
+    })
+  }
 
   const getUserInfo = useCallback(async () => {
     try {
@@ -58,7 +64,7 @@ export default function Home() {
 
       <div className="max-w-5xl mx-auto">
         <div className="grid grid-cols-3 gap-4 mt-8">
-          {allNotes.map((item, index) => (
+          {allNotes.map((item) => (
             <NoteCard
               key={item._id}
               title={item.title}
@@ -66,7 +72,7 @@ export default function Home() {
               content={item.content}
               tags={item.tags}
               isPinned={item.isPinned}
-              onEdit={() => { }}
+              onEdit={() => handleEdit(item)}
               onDelete={() => { }}
               onPinNote={() => { }}
             />
@@ -110,6 +116,7 @@ export default function Home() {
               data: null
             })
           }}
+          getAllNotes={getAllNotes}
         />
       </ReactModal>
 
