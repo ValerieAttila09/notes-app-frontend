@@ -3,7 +3,7 @@ import TagInput from "../../components/Input/TagInput";
 import { XIcon } from "lucide-react";
 import axiosInstance from "../../utils/axiosInstance";
 
-export default function AddEditNotes({ onClose, noteData, type, getAllNotes }) {
+export default function AddEditNotes({ onClose, noteData, type, getAllNotes, showToastMessage }) {
 
   const [title, setTitle] = useState(noteData?.title || "")
   const [content, setContent] = useState(noteData?.content || "")
@@ -17,6 +17,7 @@ export default function AddEditNotes({ onClose, noteData, type, getAllNotes }) {
         title, content, tags
       })
       if (response.data && response.data.note) {
+        showToastMessage("Note Added Successfully!")
         getAllNotes()
         onClose()
       }
@@ -34,6 +35,7 @@ export default function AddEditNotes({ onClose, noteData, type, getAllNotes }) {
         title, content, tags
       })
       if (response.data && response.data.note) {
+        showToastMessage("Note Updated Successfully!")
         getAllNotes()
         onClose()
       }

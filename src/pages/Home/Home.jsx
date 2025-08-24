@@ -6,6 +6,7 @@ import ReactModal from "react-modal"
 import { Flashlight } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import axiosInstance from "../../utils/axiosInstance"
+import ToastMessage from "../../components/ToastMessage/ToastMessage"
 
 export default function Home() {
   const navigate = useNavigate()
@@ -19,11 +20,32 @@ export default function Home() {
   const [allNotes, setAllNotes] = useState([])
   const [userInfo, setUserInfo] = useState(null)
 
+  const [showToastMsg, setShowToastMsg] = useState({
+    isShown: false,
+    message: "",
+    type: "add"
+  })
+
   const handleEdit = (noteDetails) => {
     setOpenAddEditModal({
       isShown: true,
       data: noteDetails,
       type: "edit"
+    })
+  }
+
+  const showToastMessage = (message, type) => {
+    setShowToastMsg({
+      isShown: true,
+      message: message,
+      type
+    })
+  }
+  
+  const handleCloseToast = () => {
+    setShowToastMsg({
+      isShown: false,
+      message: ""
     })
   }
 
@@ -117,8 +139,16 @@ export default function Home() {
             })
           }}
           getAllNotes={getAllNotes}
+          showToastMessage={showToastMessage}
         />
       </ReactModal>
+
+      <ToastMessage
+        isShown={showToastMsg.isShown}
+        message={showToastMsg.message}
+        type={showToastMsg.type}
+        onClose={handleCloseToast}
+      />
 
     </div>
   )
