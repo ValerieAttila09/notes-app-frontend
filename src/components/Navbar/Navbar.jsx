@@ -3,13 +3,14 @@ import { useNavigate } from "react-router-dom"
 import SearchBar from "../SearchBar/SearchBar"
 import { useState } from "react"
 
-export default function Navbar() {
+export default function Navbar({ userInfo }) {
 
   const [searchQuery, setSearchQuery] = useState("")
   const navigate = useNavigate()
 
   const onLogout = () => {
     navigate("/login")
+    localStorage.clear()
   }
 
   const handleSearch = () => {
@@ -35,7 +36,7 @@ export default function Navbar() {
         onClearSearch={onClearSearch}
       />
 
-      <ProfileInfo onLogout={onLogout} />
+      <ProfileInfo onLogout={onLogout} userInfo={userInfo} />
     </div>
   )
 }

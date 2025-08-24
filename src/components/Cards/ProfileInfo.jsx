@@ -1,11 +1,11 @@
 import { getInitials } from "../../utils/helper";
 
-export default function ProfileInfo({ onLogout }) {
+export default function ProfileInfo({ onLogout, userInfo }) {
 
   return (
     <div className="flex items-center gap-3">
       <div className="w-12 h-12 flex items-center justify-center rounded-full text-neutral-950 bg-neutral-100">
-        {getInitials("Valerie Attila")}
+        {getInitials(userInfo?.fullName)}
       </div>
 
       <div className="">

@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import NoteCard from "../../components/Cards/NoteCard";
 import Navbar from "../../components/Navbar/Navbar";
 import AddEditNotes from "./AddEditNotes";
 import ReactModal from "react-modal";
 import { Flashlight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../utils/axiosInstance";
 
 export default function Home() {
+  const navigate = useNavigate()
 
   const [openAddEditModal, setOpenAddEditModal] = useState({
     isShown: false,
@@ -13,9 +16,31 @@ export default function Home() {
     data: null
   })
 
+  const [userInfo, setUserInfo] = useState(null)
+
+
+  const getUserInfo = useCallback(async () => {
+    try {
+      const response = await axiosInstance.get("/get-user")
+      if (response.data && response.data.user) {
+        setUserInfo(response.data.user)
+      }
+    } catch (error) {
+      if (error.response.status === 401) {
+        localStorage.clear()
+        navigate('/login')
+      }
+    }
+  }, [navigate])
+
+useEffect(() => {
+  getUserInfo()
+  return () => {}
+}, [getUserInfo])
+
   return (
     <div className="">
-      <Navbar />
+      <Navbar userInfo={userInfo}/>
 
       <div className="max-w-5xl mx-auto">
         <div className="grid grid-cols-3 gap-4 mt-8">
