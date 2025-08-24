@@ -9,7 +9,7 @@ export default function ProfileInfo({ onLogout, userInfo }) {
       </div>
 
       <div className="">
-        <p className="text-sm outfit-regular">William</p>
+        <p className="text-sm outfit-regular">{userInfo?.fullName}</p>
         <button className="text-sm text-enutral-700 outfit-regular hover:underline transition-all cursor-pointer" onClick={onLogout}>Log Out</button>
       </div>
     </div>
