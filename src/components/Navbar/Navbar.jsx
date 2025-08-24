@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import SearchBar from "../SearchBar/SearchBar"
 import { useState } from "react"
 
-export default function Navbar({ userInfo }) {
+export default function Navbar({ userInfo, onSearchNote, handleClearSearch }) {
 
   const [searchQuery, setSearchQuery] = useState("")
   const navigate = useNavigate()
@@ -14,11 +14,14 @@ export default function Navbar({ userInfo }) {
   }
 
   const handleSearch = () => {
-
+    if (searchQuery) {
+      onSearchNote(searchQuery)
+    }
   }
 
   const onClearSearch = () => {
     setSearchQuery("")
+    handleClearSearch()
   }
 
   return (

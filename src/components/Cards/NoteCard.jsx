@@ -10,7 +10,7 @@ export default function NoteCard({ title, date, content, isPinned, tags, onEdit,
           <span className="text-xs text-neutral-500">{moment(date).format("Do MMM YYYY")}</span>
         </div>
 
-        <PinIcon size={18} onClick={onPinNote} className={`${isPinned ? "text-indigo-500" : "text-neutral-400"}`} />
+        <PinIcon size={18} onClick={onPinNote} className={`${isPinned ? "text-indigo-500" : "text-neutral-400"} cursor-pointer hover:text-indigo-300 transition-all`} />
 
       </div>
       <p className="text-xs text-neutral-600 mt-2">{content?.slice(0, 60)}</p>

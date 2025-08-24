@@ -21,6 +21,8 @@ export default function Home() {
   const [allNotes, setAllNotes] = useState([])
   const [userInfo, setUserInfo] = useState(null)
 
+  const [isSearch, setIsSearch] = useState(false)
+
   const [showToastMsg, setShowToastMsg] = useState({
     isShown: false,
     message: "",
@@ -91,6 +93,42 @@ export default function Home() {
     }
   }
 
+  const onSearchNote = async (query) => {
+    try {
+      const response = await axiosInstance.get("/search-notes", {
+        params: { query }
+      })
+      if (response.data && response.data.notes) {
+        setIsSearch(true)
+        setAllNotes(response.data.notes)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const handleClearSearch = () => {
+    setIsSearch(false)
+    getAllNotes()
+  }
+
+  const updatedIsPinned = async (noteData) => {
+    const noteId = noteData._id
+    try {
+      const response = await axiosInstance.put(`/update-note-pinned/${noteId}`, {
+        isPinned: !noteData.isPinned
+      })
+      if (response.data && response.data.note) {
+        showToastMessage("Note Updated Successfully!")
+        getAllNotes()
+      }
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.message) {
+        console.error(error)
+      }
+    }
+  }
+
   useEffect(() => {
     getAllNotes()
     getUserInfo()
@@ -99,33 +137,41 @@ export default function Home() {
 
   return (
     <div className="">
-      <Navbar userInfo={userInfo} />
+      <Navbar userInfo={userInfo} onSearchNote={onSearchNote} handleClearSearch={handleClearSearch} />
 
       <div className="max-w-5xl mx-auto">
-        {allNotes > 0 ? (<div className="grid grid-cols-3 gap-4 mt-8">
-          {allNotes.map((item) => (
-            <NoteCard
-              key={item._id}
-              title={item.title}
-              date={item.createdOn}
-              content={item.content}
-              tags={item.tags}
-              isPinned={item.isPinned}
-              onEdit={() => handleEdit(item)}
-              onDelete={() => deleteNote(item)}
-              onPinNote={() => { }}
-            />
-          ))}
-        </div>) : (
+        {allNotes != 0 ? (
+          <div className="grid grid-cols-3 gap-4 mt-8">
+            {allNotes.map((item) => (
+              <NoteCard
+                key={item._id}
+                title={item.title}
+                date={item.createdOn}
+                content={item.content}
+                tags={item.tags}
+                isPinned={item.isPinned}
+                onEdit={() => handleEdit(item)}
+                onDelete={() => deleteNote(item)}
+                onPinNote={() => updatedIsPinned(item)}
+              />
+            ))}
+          </div>
+        ) : (
           <EmptyCard
-            imgSrc={
+            imgSrc={isSearch ? (
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-24 text-neutral-400">
+                <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+              </svg>
+            ) : (
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-24 text-neutral-400">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
               </svg>
-            }
-            message={
+            )}
+            message={isSearch ? (
+              <span className="text-center">Oops! Notes Not Found!</span>
+            ) : (
               <span className="text-center">No Notes Are Created Yet. <br /> Start Creating Your First Note by Clicking the 'Add' Button.</span>
-            }
+            )}
           />
         )}
       </div>
