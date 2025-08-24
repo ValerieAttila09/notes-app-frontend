@@ -49,7 +49,6 @@ export default function Login() {
 
   return (
     <div>
-      <Navbar />
 
       <div className="flex items-center justify-center mt-28">
         <div className="w-96 border border-[#d7d7d7] rounded-md bg-white px-7 py-10">
